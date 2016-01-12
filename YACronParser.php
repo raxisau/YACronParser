@@ -52,7 +52,7 @@
  * See the code at the end of this class to see some examples
  *
  */
-class CronParser {
+class YACronParser {
 
     /**
      * Gets the last run date before now
@@ -102,7 +102,7 @@ class CronParser {
         $cronParts[2] = self::cronPartToRange( $cronParts[2], range( 1, 31 ) ); // Day of Month
         $cronParts[3] = self::cronPartToRange( $cronParts[3], range( 1, 12 ) ); // Month of the year
         $cronParts[4] = self::cronPartToRange( $cronParts[4], range( 0, 6 ) );  // Day of the week
-        $cronParts[5] =  [ (int)date( 'Y' ) ]; // assume current year
+        $cronParts[5] =  [ (int)date( 'Y' ) - 2, (int)date( 'Y' ) - 1, (int)date( 'Y' ) ]; // only go back 2 years
 
         // ******* TODO ****************
         // The code below is usually commented out.
@@ -119,20 +119,23 @@ class CronParser {
         $now = time();
 
         // search down the to the last run
-        for ( $correctParts[3]=count( $cronParts[3] ) - 1; $correctParts[3]>=0; $correctParts[3]-- ) {
-            for ( $correctParts[2]=count( $cronParts[2] ) - 1; $correctParts[2]>=0; $correctParts[2]-- ) {
+        for ( $correctParts[5]=count( $cronParts[5] ) - 1; $correctParts[5]>=0; $correctParts[5]-- ) {
 
-                // If this is not a valid day then skip it
-                if ( $numDaysOfWeek != 7 && ! in_array ( self::getDayOfWeek( $cronParts, $correctParts ), $cronParts[4] ) ) {
-                    continue;
-                }
+            for ( $correctParts[3]=count( $cronParts[3] ) - 1; $correctParts[3]>=0; $correctParts[3]-- ) {
+                for ( $correctParts[2]=count( $cronParts[2] ) - 1; $correctParts[2]>=0; $correctParts[2]-- ) {
 
-                // Calc hour and minute
-                for ( $correctParts[1]=count( $cronParts[1] ) - 1; $correctParts[1]>=0; $correctParts[1]-- ) {
-                    for ( $correctParts[0]=count( $cronParts[0] ) - 1; $correctParts[0]>=0; $correctParts[0]-- ) {
-                        $calcTime = self::calcTime( $cronParts, $correctParts );
-                        if ( $calcTime < $now ) {
-                            return $calcTime;
+                    // If this is not a valid day then skip it
+                    if ( $numDaysOfWeek != 7 && ! in_array ( self::getDayOfWeek( $cronParts, $correctParts ), $cronParts[4] ) ) {
+                        continue;
+                    }
+
+                    // Calc hour and minute
+                    for ( $correctParts[1]=count( $cronParts[1] ) - 1; $correctParts[1]>=0; $correctParts[1]-- ) {
+                        for ( $correctParts[0]=count( $cronParts[0] ) - 1; $correctParts[0]>=0; $correctParts[0]-- ) {
+                            $calcTime = self::calcTime( $cronParts, $correctParts );
+                            if ( $calcTime < $now ) {
+                                return $calcTime;
+                            }
                         }
                     }
                 }
@@ -157,6 +160,9 @@ class CronParser {
                         $cronParts[3][$correctParts[3]],
                         $cronParts[2][$correctParts[2]],
                         $cronParts[5][$correctParts[5]] );
+        //echo '$cronParts  - [' . join( ', ', $cronParts  ) . ']<br/>' . "\n";
+        //echo '$correctParts  - [' . join( ', ', $correctParts  ) . ']<br/>' . "\n";
+        //echo date ( 'Y-m-d H:i', $tim ) . '<br/>' . "\n";
         return $tim;
     }
     /**
@@ -176,18 +182,10 @@ class CronParser {
     }
 
     /**
-     * Takes the cron component and the range of valid numbers and reduces the list
-     * @param unknown $part the part of the cron string
-     * @param unknown $fullRange valid range
-     * @return multitype:number |multitype:|Ambigous <multitype:, multitype:Ambigous <unknown, multitype:number , multitype:, multitype:Ambigous <unknown, multitype:number , multitype:> > >|unknown
-     */
-
-
-    /**
      * Takes the cron component and the range of valid numbers and reduces the list.
      * This method calls itself recursively until all the elements are evaluated
      *
-     * @param type $part
+     * @param type $part the part of the cron string
      * @param type $fullRange. For the position the $fullRange variable contains all the elements that would be valid.
      *                         e.g. minutes would be range( 0, 59 )
      * @return type
@@ -264,12 +262,12 @@ class CronParser {
 // The code below is usually commented out.
 // Do not need this in production. So when you are done, remove
 date_default_timezone_set ( 'Australia/Brisbane' );
+echo 'Simple case - no calcs - LastRun Date: ' . date ( 'Y-m-d H:i', CronParser::lastRun( '* * * * *' ) ) . '<br/>' . "\n";
 echo 'LastRun Date: ' . date ( 'Y-m-d H:i', CronParser::lastRun( '5/15 0 * * *' ) ) . '<br/>' . "\n";
 echo 'LastRun Date: ' . date ( 'Y-m-d H:i', CronParser::lastRun( '0/15 * * * *' ) ) . '<br/>' . "\n";
 echo 'LastRun Date: ' . date ( 'Y-m-d H:i', CronParser::lastRun( '0 2 * * *' ) ) . '<br/>' . "\n";
 echo 'LastRun Date: ' . date ( 'Y-m-d H:i', CronParser::lastRun( '* 11-20 * * *' ) ) . '<br/>' . "\n";
 echo 'LastRun Date: ' . date ( 'Y-m-d H:i', CronParser::lastRun( '0/15 * * * *' ) ) . '<br/>' . "\n";
-echo 'LastRun Date: ' . date ( 'Y-m-d H:i', CronParser::lastRun( '* * * * *' ) ) . '<br/>' . "\n";
 echo 'LastRun Date: ' . date ( 'Y-m-d H:i', CronParser::lastRun( '* 12-21 * * *' ) ) . '<br/>' . "\n";
 echo 'LastRun Date: ' . date ( 'Y-m-d H:i', CronParser::lastRun( '0 2 * * *' ) ) . '<br/>' . "\n";
 echo 'LastRun Date: ' . date ( 'Y-m-d H:i', CronParser::lastRun( '1-59/2 14-23 * * *' ) ) . '<br/>' . "\n";
@@ -282,4 +280,5 @@ echo 'LastRun Date: ' . date ( 'Y-m-d H:i', CronParser::lastRun( '0 */4 * * *' )
 echo 'LastRun Date: ' . date ( 'Y-m-d H:i', CronParser::lastRun( '0 0/4 * * *' ) ) . '<br/>' . "\n";
 echo 'LastRun Date: ' . date ( 'Y-m-d H:i', CronParser::lastRun( '0 2/3 * * *' ) ) . '<br/>' . "\n";
 echo 'LastRun Date: ' . date ( 'Y-m-d H:i', CronParser::lastRun( '30-50/3 * * * *' ) ) . '<br/>' . "\n";
+echo 'LastRun Date: ' . date ( 'Y-m-d H:i', CronParser::lastRun( '0 0 31 * *' ) ) . '<br/>' . "\n";
 
