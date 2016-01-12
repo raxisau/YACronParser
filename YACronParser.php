@@ -262,23 +262,23 @@ class YACronParser {
 // The code below is usually commented out.
 // Do not need this in production. So when you are done, remove
 date_default_timezone_set ( 'Australia/Brisbane' );
-echo 'Simple case - no calcs - LastRun Date: ' . date ( 'Y-m-d H:i', CronParser::lastRun( '* * * * *' ) ) . '<br/>' . "\n";
-echo 'LastRun Date: ' . date ( 'Y-m-d H:i', CronParser::lastRun( '5/15 0 * * *' ) ) . '<br/>' . "\n";
-echo 'LastRun Date: ' . date ( 'Y-m-d H:i', CronParser::lastRun( '0/15 * * * *' ) ) . '<br/>' . "\n";
-echo 'LastRun Date: ' . date ( 'Y-m-d H:i', CronParser::lastRun( '0 2 * * *' ) ) . '<br/>' . "\n";
-echo 'LastRun Date: ' . date ( 'Y-m-d H:i', CronParser::lastRun( '* 11-20 * * *' ) ) . '<br/>' . "\n";
-echo 'LastRun Date: ' . date ( 'Y-m-d H:i', CronParser::lastRun( '0/15 * * * *' ) ) . '<br/>' . "\n";
-echo 'LastRun Date: ' . date ( 'Y-m-d H:i', CronParser::lastRun( '* 12-21 * * *' ) ) . '<br/>' . "\n";
-echo 'LastRun Date: ' . date ( 'Y-m-d H:i', CronParser::lastRun( '0 2 * * *' ) ) . '<br/>' . "\n";
-echo 'LastRun Date: ' . date ( 'Y-m-d H:i', CronParser::lastRun( '1-59/2 14-23 * * *' ) ) . '<br/>' . "\n";
-echo 'LastRun Date: ' . date ( 'Y-m-d H:i', CronParser::lastRun( '0-58/2 14-23 * * *' ) ) . '<br/>' . "\n";
-echo 'LastRun Date: ' . date ( 'Y-m-d H:i', CronParser::lastRun( '* * * * *' ) ) . '<br/>' . "\n";
-echo 'LastRun Date: ' . date ( 'Y-m-d H:i', CronParser::lastRun( '* 22-23 * * *' ) ) . '<br/>' . "\n";
-echo 'LastRun Date: ' . date ( 'Y-m-d H:i', CronParser::lastRun( '1-2 22-23 * * Monday-Wednesday' ) ) . '<br/>' . "\n";
-echo 'LastRun Date: ' . date ( 'Y-m-d H:i', CronParser::lastRun( '1,2,3,4,10-20 11-20 * * *' ) ) . '<br/>' . "\n";
-echo 'LastRun Date: ' . date ( 'Y-m-d H:i', CronParser::lastRun( '0 */4 * * *' ) ) . '<br/>' . "\n";
-echo 'LastRun Date: ' . date ( 'Y-m-d H:i', CronParser::lastRun( '0 0/4 * * *' ) ) . '<br/>' . "\n";
-echo 'LastRun Date: ' . date ( 'Y-m-d H:i', CronParser::lastRun( '0 2/3 * * *' ) ) . '<br/>' . "\n";
-echo 'LastRun Date: ' . date ( 'Y-m-d H:i', CronParser::lastRun( '30-50/3 * * * *' ) ) . '<br/>' . "\n";
-echo 'LastRun Date: ' . date ( 'Y-m-d H:i', CronParser::lastRun( '0 0 31 * *' ) ) . '<br/>' . "\n";
+echo 'Simple case - no calcs - LastRun Date: ' . date ( 'Y-m-d H:i', YACronParser::lastRun( '* * * * *' ) ) . '<br/>' . "\n";
+echo 'LastRun Date: ' . date ( 'Y-m-d H:i', YACronParser::lastRun( '5/15 0 * * *' ) ) . '<br/>' . "\n";
+echo 'LastRun Date: ' . date ( 'Y-m-d H:i', YACronParser::lastRun( '0/15 * * * *' ) ) . '<br/>' . "\n";
+echo 'LastRun Date: ' . date ( 'Y-m-d H:i', YACronParser::lastRun( '0 2 * * *' ) ) . '<br/>' . "\n";
+echo 'LastRun Date: ' . date ( 'Y-m-d H:i', YACronParser::lastRun( '* 11-20 * * *' ) ) . '<br/>' . "\n";
+echo 'LastRun Date: ' . date ( 'Y-m-d H:i', YACronParser::lastRun( '0/15 * * * *' ) ) . '<br/>' . "\n";
+echo 'LastRun Date: ' . date ( 'Y-m-d H:i', YACronParser::lastRun( '* 12-21 * * *' ) ) . '<br/>' . "\n";
+echo 'LastRun Date: ' . date ( 'Y-m-d H:i', YACronParser::lastRun( '0 2 * * *' ) ) . '<br/>' . "\n";
+echo 'LastRun Date: ' . date ( 'Y-m-d H:i', YACronParser::lastRun( '1-59/2 14-23 * * *' ) ) . '<br/>' . "\n";
+echo 'LastRun Date: ' . date ( 'Y-m-d H:i', YACronParser::lastRun( '0-58/2 14-23 * * *' ) ) . '<br/>' . "\n";
+echo 'LastRun Date: ' . date ( 'Y-m-d H:i', YACronParser::lastRun( '* * * * *' ) ) . '<br/>' . "\n";
+echo 'LastRun Date: ' . date ( 'Y-m-d H:i', YACronParser::lastRun( '* 22-23 * * *' ) ) . '<br/>' . "\n";
+echo 'LastRun Date: ' . date ( 'Y-m-d H:i', YACronParser::lastRun( '1-2 22-23 * * Monday-Wednesday' ) ) . '<br/>' . "\n";
+echo 'LastRun Date: ' . date ( 'Y-m-d H:i', YACronParser::lastRun( '1,2,3,4,10-20 11-20 * * *' ) ) . '<br/>' . "\n";
+echo 'LastRun Date: ' . date ( 'Y-m-d H:i', YACronParser::lastRun( '0 */4 * * *' ) ) . '<br/>' . "\n";
+echo 'LastRun Date: ' . date ( 'Y-m-d H:i', YACronParser::lastRun( '0 0/4 * * *' ) ) . '<br/>' . "\n";
+echo 'LastRun Date: ' . date ( 'Y-m-d H:i', YACronParser::lastRun( '0 2/3 * * *' ) ) . '<br/>' . "\n";
+echo 'LastRun Date: ' . date ( 'Y-m-d H:i', YACronParser::lastRun( '30-50/3 * * * *' ) ) . '<br/>' . "\n";
+echo 'LastRun Date: ' . date ( 'Y-m-d H:i', YACronParser::lastRun( '0 0 31 * *' ) ) . '<br/>' . "\n";
 
