@@ -284,4 +284,7 @@ echo 'LastRun Date: ' . date ( 'Y-m-d H:i', YACronParser::lastRun( '0 0/4 * * *'
 echo 'LastRun Date: ' . date ( 'Y-m-d H:i', YACronParser::lastRun( '0 2/3 * * *' ) ) . '<br/>' . "\n";
 echo 'LastRun Date: ' . date ( 'Y-m-d H:i', YACronParser::lastRun( '30-50/3 * * * *' ) ) . '<br/>' . "\n";
 echo 'LastRun Date: ' . date ( 'Y-m-d H:i', YACronParser::lastRun( '0 0 31 * *' ) ) . '<br/>' . "\n";
-
+echo 'LastRun Date: ' . date ( 'Y-m-d H:i', YACronParser::lastRun( '0 0 31 * Monday,Wednesday,Friday' ) ) . '<br/>' . "\n";
+echo 'LastRun Date: ' . date ( 'Y-m-d H:i', YACronParser::lastRun( '02-59/15 02-04 * * Thu' ) ) . '<br/>' . "\n";
+echo 'LastRun Date: ' . date ( 'Y-m-d H:i', YACronParser::lastRun( '01 00 * * Tue' ) ) . '<br/>' . "\n";
+echo 'LastRun Date: ' . date ( 'Y-m-d H:i', YACronParser::lastRun( '02 00 * * Thu' ) ) . '<br/>' . "\n";
