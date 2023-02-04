@@ -18,11 +18,15 @@ foreach ( self::getCronTabList () as $sheduleItem ) {
       if ( $storedLastRunTime <  $previousCalculatedRunTime ) {
 
           // Update the run time to now
-          $sheduleItem->lastRun = strftime ( '%Y-%m-%d %H:%M', $previousCalculatedRunTime );
-          $sheduleItem->save ();
+          $sheduleItem->lastRun = strftime( '%Y-%m-%d %H:%M', $lastRun );
+          $sheduleItem->save();
 
-          // Do the work to run the cron job here
-          // ..................
+          $diffSec = abs( $lastRun - time() );
+          if ( $diffSec < 60 ) {
+              // .......
+              // Do the Cron work now, or add to a queue for processing
+              // .......
+          }
       }
 }
 ```
@@ -49,4 +53,9 @@ echo 'LastRun Date: ' . date ( 'Y-m-d H:i', CronParser::lastRun( '0 */4 * * *' )
 echo 'LastRun Date: ' . date ( 'Y-m-d H:i', CronParser::lastRun( '0 0/4 * * *' ) ) . '<br/>' . "\n";
 echo 'LastRun Date: ' . date ( 'Y-m-d H:i', CronParser::lastRun( '0 2/3 * * *' ) ) . '<br/>' . "\n";
 echo 'LastRun Date: ' . date ( 'Y-m-d H:i', CronParser::lastRun( '30-50/3 * * * *' ) ) . '<br/>' . "\n";
+echo 'LastRun Date: ' . date ( 'Y-m-d H:i', CronParser::lastRun( '0 0 31 * *' ) ) . '<br/>' . "\n";
+echo 'LastRun Date: ' . date ( 'Y-m-d H:i', CronParser::lastRun( '0 0 31 * Monday,Wednesday,Friday' ) ) . '<br/>' . "\n";
+echo 'LastRun Date: ' . date ( 'Y-m-d H:i', CronParser::lastRun( '02-59/15 02-04 * * Thu' ) ) . '<br/>' . "\n";
+echo 'LastRun Date: ' . date ( 'Y-m-d H:i', CronParser::lastRun( '01 00 * * Tue' ) ) . '<br/>' . "\n";
+echo 'LastRun Date: ' . date ( 'Y-m-d H:i', CronParser::lastRun( '02 00 * * Thu' ) ) . '<br/>' . "\n";
 ```
