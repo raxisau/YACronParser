@@ -33,8 +33,12 @@
  *              $sheduleItem->lastRun = strftime ( '%Y-%m-%d %H:%M', $previousCalculatedRunTime );
  *              $sheduleItem->save ();
  *
- *              // Do the work to run the cron job here
- *              // ..................
+ *              $diffSec = abs( $lastRun - time() );
+ *              if ( $diffSec < 60 ) {
+ *                  // .......
+ *                  // Do the Cron work now, or add to a queue for processing
+ *                  // .......
+ *              }
  *          }
  *      }
  *
@@ -85,9 +89,8 @@ class YACronParser {
 
         // Get rid of names
         $cronString = strtolower( $cronString );
-        $cronString = str_replace (  [ 'sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday' ],
-                                     [ '0',      '1',      '2',       '3',         '4',        '5',      '6' ],
-                                    $cronString );
+        $cronString = str_replace( [ 'sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday' ], [ '0', '1', '2', '3', '4', '5', '6' ], $cronString );
+        $cronString = str_replace( [ 'sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat' ], [ '0', '1', '2', '3', '4', '5', '6' ], $cronString );
 
         // Get the parts if not 5 return every minute
         $cronParts = explode( ' ' , $cronString );
